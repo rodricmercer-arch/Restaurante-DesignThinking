@@ -30,6 +30,15 @@
         </div>
 
         <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen (ruta o URL)</label>
+            <input type="text" th:field="*{imagen}" class="form-control"
+                   placeholder="img/platos/mi-plato.jpg o https://..."
+                   th:classappend="${#fields.hasErrors('imagen')} ? 'is-invalid'">
+            <div class="form-text">Opcional. Ruta dentro de static/ (sin barra inicial) o URL completa.</div>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('imagen')}" th:errors="*{imagen}"></div>
+        </div>
+
+        <div class="mb-3">
             <label for="precio" class="form-label">Precio</label>
             <input type="number" step="0.01" th:field="*{precio}" class="form-control"
                    th:classappend="${#fields.hasErrors('precio')} ? 'is-invalid'">

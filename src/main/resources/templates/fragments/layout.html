@@ -50,4 +50,12 @@
         </div>
     </div>
 </div>
+
+<!--/* Foto de un plato con ícono de respaldo. Uso: platoImg(${plato}, 'dish-thumb' | 'dish-banner' | 'dish-mini') */-->
+<div th:fragment="platoImg(plato, clase)" class="dish-img" th:classappend="${clase}">
+    <i th:class="${plato.categoria.name() == 'PRINCIPAL' ? 'fas fa-utensils' : (plato.categoria.name() == 'POSTRE' ? 'fas fa-ice-cream' : 'fas fa-wine-glass')}"></i>
+    <img th:if="${plato.imagen != null and !plato.imagen.isBlank()}"
+         th:src="${#strings.startsWith(plato.imagen, 'http')} ? ${plato.imagen} : @{'/' + ${plato.imagen}}"
+         th:alt="${plato.nombre}" loading="lazy" onerror="this.remove()">
+</div>
 </body>

@@ -30,6 +30,11 @@ public class Plato {
     @Column(nullable = false)
     private CategoriaPlato categoria;
 
+    // Opcional. Ruta relativa dentro de static/ SIN barra inicial (ej. "img/platos/lomo-saltado.jpg") o URL absoluta que empiece por "http".
+    @Size(max = 255, message = "La ruta de la imagen no puede superar los 255 caracteres")
+    @Column(length = 255)
+    private String imagen;
+
     public Plato() {}
 
     public Plato(String nombre, String descripcion, BigDecimal precio, CategoriaPlato categoria) {
@@ -53,4 +58,7 @@ public class Plato {
 
     public CategoriaPlato getCategoria() { return categoria; }
     public void setCategoria(CategoriaPlato categoria) { this.categoria = categoria; }
+
+    public String getImagen() { return imagen; }
+    public void setImagen(String imagen) { this.imagen = imagen; }
 }

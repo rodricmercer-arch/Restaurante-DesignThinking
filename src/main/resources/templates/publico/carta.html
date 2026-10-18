@@ -24,13 +24,12 @@
 
     <div class="section-label">Platos principales</div>
     <div class="row g-3 mb-4">
-        <div class="col-md-6" th:each="plato : ${principales}">
-            <div class="dish-card readonly">
-                <div>
+        <div class="col-md-6 col-lg-4" th:each="plato : ${principales}">
+            <div class="dish-public">
+                <div th:replace="~{fragments/layout :: platoImg(${plato}, 'dish-banner')}"></div>
+                <div class="dish-public-body">
                     <div class="dish-name" th:text="${plato.nombre}"></div>
                     <p class="dish-desc" th:text="${plato.descripcion}"></p>
-                </div>
-                <div class="text-end">
                     <div class="dish-price">S/ <span th:text="${plato.precio}"></span></div>
                 </div>
             </div>
@@ -42,13 +41,12 @@
 
     <div class="section-label">Postres</div>
     <div class="row g-3 mb-4">
-        <div class="col-md-6" th:each="plato : ${postres}">
-            <div class="dish-card readonly">
-                <div>
+        <div class="col-md-6 col-lg-4" th:each="plato : ${postres}">
+            <div class="dish-public">
+                <div th:replace="~{fragments/layout :: platoImg(${plato}, 'dish-banner')}"></div>
+                <div class="dish-public-body">
                     <div class="dish-name" th:text="${plato.nombre}"></div>
                     <p class="dish-desc" th:text="${plato.descripcion}"></p>
-                </div>
-                <div class="text-end">
                     <div class="dish-price">S/ <span th:text="${plato.precio}"></span></div>
                 </div>
             </div>
@@ -60,13 +58,12 @@
 
     <div class="section-label">Bebidas</div>
     <div class="row g-3 mb-4">
-        <div class="col-md-6" th:each="plato : ${bebidas}">
-            <div class="dish-card readonly">
-                <div>
+        <div class="col-md-6 col-lg-4" th:each="plato : ${bebidas}">
+            <div class="dish-public">
+                <div th:replace="~{fragments/layout :: platoImg(${plato}, 'dish-banner')}"></div>
+                <div class="dish-public-body">
                     <div class="dish-name" th:text="${plato.nombre}"></div>
                     <p class="dish-desc" th:text="${plato.descripcion}"></p>
-                </div>
-                <div class="text-end">
                     <div class="dish-price">S/ <span th:text="${plato.precio}"></span></div>
                 </div>
             </div>

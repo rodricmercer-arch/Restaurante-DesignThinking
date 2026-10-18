@@ -63,8 +63,10 @@ public class CartaService {
         if (platoRepository.existsByNombreIgnoreCase(datos.getNombre())) {
             throw new IllegalStateException("Ya existe un plato con el nombre \"" + datos.getNombre() + "\".");
         }
-        return platoRepository.save(new Plato(datos.getNombre(), datos.getDescripcion(),
-                datos.getPrecio(), datos.getCategoria()));
+        Plato nuevo = new Plato(datos.getNombre(), datos.getDescripcion(),
+                datos.getPrecio(), datos.getCategoria());
+        nuevo.setImagen(normalizarImagen(datos.getImagen()));
+        return platoRepository.save(nuevo);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -79,7 +81,16 @@ public class CartaService {
         plato.setDescripcion(datos.getDescripcion());
         plato.setPrecio(datos.getPrecio());
         plato.setCategoria(datos.getCategoria());
+        plato.setImagen(normalizarImagen(datos.getImagen()));
         return platoRepository.save(plato);
+    }
+
+    /** Imagen nula o en blanco -> null; en otro caso se guarda recortada con trim(). */
+    private String normalizarImagen(String imagen) {
+        if (imagen == null || imagen.isBlank()) {
+            return null;
+        }
+        return imagen.trim();
     }
 
     // ---- Fase 2: consultas JPQL ----

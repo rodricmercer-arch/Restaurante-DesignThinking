@@ -16,7 +16,7 @@
 
 <div class="container container-narrow">
 
-    <div class="hero-section">
+    <div class="hero-section hero-con-imagen">
         <div>
             <div class="hero-eyebrow">Reserva de mesas</div>
             <h1 class="hero-title">Elige tu mesa</h1>
@@ -54,13 +54,17 @@
 
     <div class="row g-3 mb-5">
         <div class="col-6 col-md-4 col-lg-3 mesa-item" th:each="mesa : ${mesas}" th:attr="data-estado=${mesa.estado.name()}">
-            <div class="card-mesa p-3">
-                <div class="mesa-top">
-                    <span class="badge-estado" th:classappend="${mesa.estado.name() == 'LIBRE'} ? 'libre' : 'reservada'">
-                        <span class="dot"></span>
-                        <span th:text="${mesa.estado.name() == 'LIBRE'} ? 'Libre' : 'Reservada'"></span>
-                    </span>
+            <div class="card-mesa">
+                <div class="mesa-img"
+                     th:classappend="${mesa.capacidad <= 2 ? 'mesa-img-2' : (mesa.capacidad <= 4 ? 'mesa-img-4' : 'mesa-img-grupo')}">
+                    <div class="mesa-top">
+                        <span class="badge-estado" th:classappend="${mesa.estado.name() == 'LIBRE'} ? 'libre' : 'reservada'">
+                            <span class="dot"></span>
+                            <span th:text="${mesa.estado.name() == 'LIBRE'} ? 'Libre' : 'Reservada'"></span>
+                        </span>
+                    </div>
                 </div>
+                <div class="p-3">
                 <div class="mesa-numero">Mesa <span th:text="${mesa.numero}"></span></div>
                 <div class="mesa-cap">
                     <i class="fas fa-user-group"></i>
@@ -86,6 +90,7 @@
                 <button th:unless="${mesa.estado.name() == 'LIBRE' and reservaActiva == null}"
                         class="btn-nodisponible" disabled
                         th:text="${mesa.estado.name() == 'LIBRE'} ? 'Ya tienes una reserva' : 'No disponible'"></button>
+                </div>
             </div>
         </div>
     </div>
