@@ -87,7 +87,7 @@ public class SecurityConfig {
             .authenticationProvider(authProvider())
             .authorizeHttpRequests(auth -> auth
                 // El orden importa: Spring Security aplica la PRIMERA regla que coincide.
-                .requestMatchers("/", "/login", "/css/**", "/js/**", "/img/**", "/error", "/403").permitAll()
+                .requestMatchers("/", "/login", "/registro", "/carta", "/css/**", "/js/**", "/img/**", "/error", "/403").permitAll()
                 .requestMatchers("/reportes/**").hasRole("ADMIN")
                 .requestMatchers("/perfil/**").hasAnyRole("CLIENTE", "ADMIN")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -95,12 +95,12 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .loginPage("/")
+                .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .usernameParameter("dni")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/dashboard", true)
-                .failureUrl("/?error=true")
+                .failureUrl("/login?error=true")
                 .permitAll()
             )
             .logout(logout -> logout

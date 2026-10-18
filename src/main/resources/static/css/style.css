@@ -630,3 +630,81 @@ a { text-decoration: none; }
 .container-narrow { max-width: 1140px; margin: 0 auto; padding: 0 16px; }
 
 .login-card { max-width: 380px; margin: 80px auto; }
+
+/* ===== Acceso público (Fase 6) ===== */
+.navbar-restaurante .btn-nav-login {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+    border-radius: 8px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+.navbar-restaurante .btn-nav-login:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+}
+
+.navbar-restaurante .btn-nav-registro {
+    display: inline-block;
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    color: #fff;
+    border-radius: 8px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+.navbar-restaurante .btn-nav-registro:hover {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+    color: #fff;
+}
+
+/* El "Reservar mesa" anónimo es un <button>; debe verse igual que el <a> */
+button.btn-reservar {
+    border: none;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Tarjetas de la carta pública: solo lectura */
+.dish-card.readonly {
+    cursor: default;
+}
+.dish-card.readonly:hover {
+    border-color: var(--line);
+    box-shadow: none;
+    transform: none;
+}
+
+/* Ícono del modal "Inicia sesión para continuar" */
+.modal-login-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: rgba(192, 57, 43, 0.12);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+}
+
+/* Igualar los botones de acceso a la forma de .btn-logout (píldora) */
+.navbar-restaurante .btn-nav-login,
+.navbar-restaurante .btn-nav-registro {
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-size: 0.82rem;
+}
+.navbar-restaurante .btn-nav-login {
+    border-color: rgba(255, 255, 255, 0.25);
+}

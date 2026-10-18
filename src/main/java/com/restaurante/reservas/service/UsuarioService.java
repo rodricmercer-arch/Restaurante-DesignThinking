@@ -1,6 +1,7 @@
 package com.restaurante.reservas.service;
 
 import com.restaurante.reservas.dto.UsuarioFormDTO;
+import com.restaurante.reservas.dto.RegistroFormDTO;
 import com.restaurante.reservas.model.Rol;
 import com.restaurante.reservas.model.Usuario;
 import com.restaurante.reservas.repository.ReservaRepository;
@@ -49,6 +50,22 @@ public class UsuarioService {
         }
         Usuario u = new Usuario(form.getDni(), passwordEncoder.encode(form.getPassword()),
                 form.getNombre(), form.getRol());
+        return usuarioRepository.save(u);
+    }
+
+    // PÚBLICO a propósito: lo usan visitantes sin sesión desde /registro, por eso NO lleva @PreAuthorize.
+    // El rol se fija aquí (CLIENTE) y nunca se lee del formulario: nadie puede registrarse como ADMIN.
+    @Transactional
+    public Usuario registrarCliente(RegistroFormDTO form) {
+        if (form.getPassword() == null || !form.getPassword().equals(form.getConfirmacion())) {
+            throw new IllegalStateException("La confirmación no coincide con la contraseña.");
+        }
+        validarPassword(form.getPassword(), true);
+        if (usuarioRepository.existsByDni(form.getDni())) {
+            throw new IllegalStateException("Ya existe una cuenta con el DNI " + form.getDni() + ".");
+        }
+        Usuario u = new Usuario(form.getDni(), passwordEncoder.encode(form.getPassword()),
+                form.getNombre(), Rol.CLIENTE);
         return usuarioRepository.save(u);
     }
 

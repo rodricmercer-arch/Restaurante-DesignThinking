@@ -76,20 +76,20 @@ class RutasSeguridadTest {
                 new ReporteDTO(Map.of(), Map.of(), Map.of(), List.of(), BigDecimal.ZERO));
     }
 
-    // ---------- Anónimo: redirige al login ("/") ----------
+    // ---------- Anónimo: redirige al login ("/login") ----------
 
     @Test
     void anonimo_reportes_redirigeAlLogin() throws Exception {
         mockMvc.perform(get("/reportes"))
                 .andExpect(status().isFound())
-                .andExpect(redirectedUrl("http://localhost/"));
+                .andExpect(redirectedUrl("http://localhost/login"));
     }
 
     @Test
     void anonimo_perfil_redirigeAlLogin() throws Exception {
         mockMvc.perform(get("/perfil"))
                 .andExpect(status().isFound())
-                .andExpect(redirectedUrl("http://localhost/"));
+                .andExpect(redirectedUrl("http://localhost/login"));
     }
 
     // ---------- CLIENTE ----------
