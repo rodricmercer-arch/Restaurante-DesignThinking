@@ -4,6 +4,7 @@ import com.restaurante.reservas.model.*;
 import com.restaurante.reservas.repository.*;
 import com.restaurante.reservas.service.CartaService;
 import com.restaurante.reservas.service.MesaService;
+import com.restaurante.reservas.service.NotificacionService;
 import com.restaurante.reservas.service.ReservaService;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.security.core.Authentication;
@@ -22,14 +23,17 @@ public class ClienteController {
     private final ReservaService reservaService;
     private final UsuarioRepository usuarioRepository;
     private final MesaRepository mesaRepository;
+    private final NotificacionService notificacionService;
 
     public ClienteController(MesaService mesaService, CartaService cartaService, ReservaService reservaService,
-                              UsuarioRepository usuarioRepository, MesaRepository mesaRepository) {
+                              UsuarioRepository usuarioRepository, MesaRepository mesaRepository,
+                              NotificacionService notificacionService) {
         this.mesaService = mesaService;
         this.cartaService = cartaService;
         this.reservaService = reservaService;
         this.usuarioRepository = usuarioRepository;
         this.mesaRepository = mesaRepository;
+        this.notificacionService = notificacionService;
     }
 
     private Usuario usuarioActual(Authentication auth) {
@@ -63,7 +67,9 @@ public class ClienteController {
                             Model model) {
         Usuario cliente = usuarioActual(auth);
         try {
-            reservaService.crearReserva(cliente, mesaId, platoPrincipalId, platoPostreId, platoBebidaId);
+            Reserva creada = reservaService.crearReserva(cliente, mesaId, platoPrincipalId, platoPostreId, platoBebidaId);
+            // Aviso por Telegram: nunca lanza excepciones y el envío ocurre en otro hilo (ver NotificacionService).
+            notificacionService.notificarReservaNueva(creada);
             return "redirect:/cliente/mireserva";
         } catch (ObjectOptimisticLockingFailureException e) {
             // Dos clientes reservaron la misma mesa a la vez: Hibernate detectó el cambio de @Version y revirtió al segundo.
